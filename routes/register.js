@@ -26,7 +26,7 @@ router.get("/", (req,res)=>{
 })
 router.post("/",(req,res)=>{
     console.log(req.body.userEmail + " "+ req.body.password);
-    //380: Level 2
+    /* //380: Level 2
     const newUser = new User({
         email: req.body.userEmail,
         password: req.body.password  //381 turn to hash 
@@ -35,9 +35,9 @@ router.post("/",(req,res)=>{
     newUser.save().then(savedDoc => {
         if(savedDoc){ res.render("secrets"); console.log("saved!");}
         else{ res.send(err); }
-    });
+    });*/
     /*
-    //Level 3
+    //Level 3 Hashing
     const newUser = new User({
         email: req.body.userEmail,
         password: md5(req.body.password)  //381 turn to hash 
@@ -47,18 +47,18 @@ router.post("/",(req,res)=>{
         if(savedDoc){ res.render("secrets"); console.log("saved!");}
         else{ res.send(err); }
     });*/
-    /*
-    //Level 4
+    //Level 4 Salting
     bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
     // Store hash in your password DB.
     const newUser = new User({
         email: req.body.userEmail,
-        password: hash  //381 turn to hash 
+        password: hash  //381 turn to hash salted
     })
     newUser.save().then(savedDoc => {
         if(savedDoc){ res.render("secrets"); console.log("saved!");}
         else{ res.send(err); }
-    });*/
+    });
+})
 });
 
 module.exports = router;
