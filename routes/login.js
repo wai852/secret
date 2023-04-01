@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require("mongoose");
-;
 
 //const md5 = require("md5"); //Level 3
 

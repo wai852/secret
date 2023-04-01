@@ -4,7 +4,7 @@ const passport = require("passport")
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {
-    console.log('Time: ', Date.now());
+    console.log('logout Time: ', Date.now());
     next();
 });
 
