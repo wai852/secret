@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const passport = require("passport")
 
 // middleware that is specific to this router
 router.use(function timeLog(req, res, next) {

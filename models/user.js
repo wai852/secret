@@ -22,6 +22,9 @@ const userSchema = new mongoose.Schema({
     googleId:{ //387 prevent everytime stored a new google id in db
         type:String
     },
+    githubId:{
+        type:String
+    },
     secret:{
         type:String
     }

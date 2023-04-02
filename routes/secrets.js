@@ -19,19 +19,13 @@ router.use(function timeLog(req, res, next) {
 // define the secrets page route
 router.get("/", (req,res)=>{
     console.log("secrets page")
-    /*
+    
     //if user haven't already logged in then redirect login page
     if (req.isAuthenticated()){
-        console.log("YES!")
-        res.render("secrets")
-    }
-    else {
-        console.log("NO!")
-        res.redirect("/login")
-    }*/
+        console.log(`is Authenticated: ${req.isAuthenticated()}`)
     //find all the secrets from user except the fill without values
     //ne = not equal
-    User.find({"secret": {$ne: null}}).then((foundUsers)=>{
+        User.find({"secret": {$ne: null}}).then((foundUsers)=>{
         //if (err){
         //  console.log("err:"+err);
         //} 
@@ -40,6 +34,11 @@ router.get("/", (req,res)=>{
             res.render("secrets", {secretsUser: foundUsers});
           }
       });
+    }
+    else {
+        console.log(`is Authenticated: ${req.isAuthenticated()}`)
+        res.redirect("/login")
+    }
 });
 
 module.exports = router;

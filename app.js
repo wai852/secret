@@ -3,10 +3,12 @@ require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 const session = require("express-session") //use session package
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const passport = require("passport")
-const findOrCreate = require('mongoose-findorcreate');
 const User = require('./models/user')
+const passport = require("passport")
+
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const GitHubStrategy = require('passport-github2').Strategy;
+const findOrCreate = require('mongoose-findorcreate');
 
 //const LocalStrategy = require("passport-local");
 //const _ = require("lodash");
@@ -161,7 +163,19 @@ passport.use(new GoogleStrategy({
     }
   }*/
 ));
-
+//Github Strategy
+passport.use(new GitHubStrategy({
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: "http://localhost:3000/auth/github/secrets"
+},
+function(accessToken, refreshToken, profile, done) {
+  console.log(profile);
+  User.findOrCreate({ githubId: profile.id }, function (err, user) {
+    return done(err, user);
+  });
+}
+));
 app.get("/", (req,res)=>{
     res.render("home");
 })
@@ -173,7 +187,12 @@ app.get("/auth/google/secrets", passport.authenticate('google', {
   failureRedirect: '/login' 
 }));
 
+app.get("/auth/github", passport.authenticate('github', { scope: ["profile"] }))
 
+app.get("/auth/github/secrets", passport.authenticate('github', { 
+  successRedirect: '/secrets',
+  failureRedirect: '/login' 
+}));
 /*app.get("/login", (req,res)=>{
     res.render("login");
 })*/
